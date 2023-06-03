@@ -2,7 +2,8 @@
 #define PRINT_H
 
 #include <stdio.h>
-#include <stdarg.h>
+
+#include <wchar.h>
 
 #ifndef __EMSCRIPTEN__
 #define __NORM "\x1B[0m"
@@ -14,15 +15,15 @@
 #define __MAGE
 #endif
 
-#define __print_fmt(x) _Generic((x),                                                \
-        signed char:        __BLUE "%d ",    unsigned char:         __BLUE "%i ",   \
-        signed short:       __BLUE "%hi ",   unsigned short:        __BLUE "%hu ",  \
-        signed int:         __BLUE "%d ",    unsigned int:          __BLUE "%u ",   \
-        signed long:        __BLUE "%ld ",   unsigned long:         __BLUE "%lu ",  \
-        signed long long:   __BLUE "%lld ",  unsigned long long:    __BLUE "%llu ", \
-        float:              __MAGE "%f ",    double:                __MAGE "%f ",   \
-        long double:        __MAGE "%Lf ",   char *:                __NORM "%s ",   \
-        char:               __BLUE "%d ",    default:               NULL )          \
+#define __print_fmt(x) _Generic((x),                                                                \
+        signed char:        __BLUE "%d ",    unsigned char:         __BLUE "%i ",                   \
+        signed short:       __BLUE "%hi ",   unsigned short:        __BLUE "%hu ",                  \
+        signed int:         __BLUE "%d ",    unsigned int:          __BLUE "%u ",                   \
+        signed long:        __BLUE "%ld ",   unsigned long:         __BLUE "%lu ",                  \
+        signed long long:   __BLUE "%lld ",  unsigned long long:    __BLUE "%llu ",                 \
+        float:              __MAGE "%f ",    double:                __MAGE "%f ",                   \
+        long double:        __MAGE "%Lf ",   char *:                __NORM "%s ",                   \
+        char:               __BLUE "%d ",    wchar_t *:             __NORM "%ls ",  default: NULL ) \
 
 #define __print(x) if (__print_fmt(x) != NULL) printf(__print_fmt(x), x)
 
