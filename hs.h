@@ -175,8 +175,6 @@ static inline void _hs_remove(hs_t *hs, void *data) {
          return;
       }
 
-      printf("AAAAA\n");
-
       bucket = &(*bucket)->next;
    }
 }
@@ -187,7 +185,8 @@ static inline bool _hs_exists(hs_t *hs, void *data) {
    hs_bucket_t *bucket = hs->buckets[_hs_hash(hs, data, size)];
 
    while (bucket != NULL) {
-      if (!memcmp(data, bucket->data, size)) return true;
+      if (_hs_size(hs, bucket->data) == size && 
+          !memcmp(data, bucket->data, size)) return true;
 
       bucket = bucket->next;
    }
